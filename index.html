@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Ni'mat ❤️</title>
+
+<style>
+body {
+    text-align: center;
+    font-family: Arial;
+    background: linear-gradient(to right, #000000, #1a1a1a);
+    color: white;
+}
+
+h1 {
+    margin-top: 50px;
+}
+
+#cake {
+    font-size: 100px;
+    margin-top: 30px;
+}
+
+#message {
+    display: none;
+    font-size: 24px;
+    margin-top: 20px;
+    color: pink;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 18px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: none;
+    background: pink;
+    color: black;
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+</style>
+</head>
+
+<body>
+
+<h1 id="countdown"></h1>
+
+<div id="main" style="display:none;">
+    <div id="cake">🎂🕯️</div>
+    <p>Make a wish and blow the candle 💫</p>
+    <button onclick="blowCandle()">Blow Candle 🎤</button>
+
+    <div id="message">
+        <h2>Happy Birthday Ni'mat ❤️</h2>
+        <p>
+             Happy Birthday ❤️
+Tumhari khushi mere liye genuinely matter karti hai…
+Aur main hamesha chahta hoon tum smile karti raho <br>
+            You are always in my thoughts 😊<br>
+            May your life be full of happiness and love 🎉<br><br>
+            —Apna khayal rakhna aur hamesha smile karte rehna…
+Kyunki tumhari khushi important hai ❤️
+        </p>
+    </div>
+</div>
+
+<canvas id="confetti"></canvas>
+
+<script>
+// Zimbabwe Time (GMT+2)
+let birthday = new Date("April 17, 2026 00:00:00 GMT+0200").getTime();
+
+let x = setInterval(function() {
+    let now = new Date().getTime();
+    let distance = birthday - now;
+
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+    let minutes = Math.floor((distance / (1000 * 60)) % 60);
+    let seconds = Math.floor((distance / 1000) % 60);
+
+    document.getElementById("countdown").innerHTML =
+        days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown").style.display = "none";
+        document.getElementById("main").style.display = "block";
+    }
+}, 1000);
+
+function blowCandle() {
+    document.getElementById("cake").innerHTML = "🎂";
+    document.getElementById("message").style.display = "block";
+    startConfetti();
+}
+
+// 🎆 Confetti Animation
+function startConfetti() {
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let pieces = [];
+    for (let i = 0; i < 100; i++) {
+        pieces.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 10,
+            speed: Math.random() * 3 + 2
+        });
+    }
+
+    function update() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "pink";
+
+        pieces.forEach(p => {
+            ctx.fillRect(p.x, p.y, p.size, p.size);
+            p.y += p.speed;
+            if (p.y > canvas.height) p.y = 0;
+        });
+
+        requestAnimationFrame(update);
+    }
+
+    update();
+}
+</script>
+
+</body>
+</html>
